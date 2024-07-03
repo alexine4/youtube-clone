@@ -36,7 +36,6 @@ public class S3Service implements FileService {
 
         try {
             amazonS3.putObject(new PutObjectRequest(bucketName, key, file.getInputStream(), metadata)
-
                 );
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
