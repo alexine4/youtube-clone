@@ -15,12 +15,12 @@
 	<name>youtube-clone</name>
 	<description>Demo project for Spring Boot</description>
 	<modules>
-
-		<module>frontend</module>
 		<module>backend</module>
+		<module>frontend</module>
+
 	</modules>
 	<properties>
-		<java.version>22</java.version>
+		<java.version>14</java.version>
 	</properties>
 
 
