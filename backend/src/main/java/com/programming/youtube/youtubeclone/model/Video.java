@@ -18,10 +18,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Builder
 public class Video {
     @Id
-    private Long id;
+    private String id;
     private String description;
     private String title;
-    private Long userId;
+    private String userId;
     private AtomicInteger likes = new AtomicInteger(0);
     private AtomicInteger disLikes = new AtomicInteger(0);
     private Set<String> tags;
