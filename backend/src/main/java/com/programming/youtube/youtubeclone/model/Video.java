@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -24,12 +25,12 @@ public class Video {
     private String userId;
     private AtomicInteger likes = new AtomicInteger(0);
     private AtomicInteger disLikes = new AtomicInteger(0);
-    private Set<String> tags;
+    private List<String> tags;
     private String videoUrl;
     private VideoStatus videoStatus;
     private AtomicInteger viewCount = new AtomicInteger(0);
     private String thumbnailUrl;
-    private List<Comment> comments;
+    private List<Comment> comments= new ArrayList<>();
 
     public int likeCount() {
         return likes.get();
