@@ -44,4 +44,11 @@ public class VideoService {
                 .orElseThrow(() -> new YoutubeCloneException("Cannot find Video with ID - " + id));
     }
 
+    public String uploadThumbnail(MultipartFile file, String videoId) {
+        var savedVideo = getVideoById(videoId);
+        String thumbnailUrl =  s3Service.uploadFile(file);
+        savedVideo.setThumbnailUrl(thumbnailUrl);
+        videoRepository.save(savedVideo);
+        return thumbnailUrl;
+    }
 }
