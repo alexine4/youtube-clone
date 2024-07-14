@@ -3,25 +3,52 @@
   <div fxFlex="30%">
     <div class="mat-title">Add video metadata</div>
 
-    <form>
-
+    <form [formGroup]="saveVideoDetailForm">
       <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
-        <input matInput required />
+        <input matInput [formControl]="title" required />
       </mat-form-field>
 
-       <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <input matInput required />
+        <input matInput [formControl]="description" required />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Video Status</mat-label>
-        <mat-select>
+        <mat-select [formControl]="videoStatus">
           <mat-option value="PUBLIC">PUBLIC</mat-option>
           <mat-option value="PRIVATE">PRIVATE</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field class="example-chip-list">
+        <mat-label>Favorite Fruits</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter fruits">
+          @for (tag of tags(); track tags) {
+          <mat-chip-row
+            (removed)="remove(tag)"
+            [editable]="true"
+            (edited)="edit(tag, $event)"
+            [aria-description]="'press enter to edit ' + tag"
+          >
+            {{tag}}
+            <button matChipRemove [attr.aria-label]="'remove ' + tag">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          }
+          <input
+            placeholder="New fruit..."
+            [matChipInputFor]="chipGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)"
+          />
+        </mat-chip-grid>
+      </mat-form-field>
+      <div>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+      </div>
     </form>
   </div>
   <div fxFlex="30%">Video player</div>
