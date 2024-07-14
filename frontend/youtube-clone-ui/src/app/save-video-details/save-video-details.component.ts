@@ -10,6 +10,7 @@ import { MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from '@angular/
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { UploadThumbnainComponent } from "./upload-thumbnain/upload-thumbnain.component";
 
 
 @Component({
@@ -24,7 +25,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
     MatSelectModule,
     MatButtonModule,
     MatChipsModule,
-    MatIconModule
+    MatIconModule,
+    UploadThumbnainComponent
   ],
   templateUrl: './save-video-details.component.html',
   styleUrl: './save-video-details.component.scss'

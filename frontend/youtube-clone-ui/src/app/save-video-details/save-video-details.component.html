@@ -22,8 +22,8 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="example-chip-list">
-        <mat-label>Favorite Fruits</mat-label>
-        <mat-chip-grid #chipGrid aria-label="Enter fruits">
+        <mat-label>Tags</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter tags">
           @for (tag of tags(); track tags) {
           <mat-chip-row
             (removed)="remove(tag)"
@@ -38,7 +38,7 @@
           </mat-chip-row>
           }
           <input
-            placeholder="New fruit..."
+            placeholder="New tag..."
             [matChipInputFor]="chipGrid"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur"
@@ -49,6 +49,7 @@
       <div>
         <button mat-raised-button color="primary" type="submit">Save</button>
       </div>
+      <app-upload-thumbnain></app-upload-thumbnain>
     </form>
   </div>
   <div fxFlex="30%">Video player</div>
