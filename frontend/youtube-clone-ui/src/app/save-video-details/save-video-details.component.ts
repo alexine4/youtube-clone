@@ -10,7 +10,7 @@ import { MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from '@angular/
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { UploadThumbnainComponent } from "./upload-thumbnain/upload-thumbnain.component";
+import { UploadThumbnainComponent } from "./upload-thumbnain/upload-thumbnail.component";
 
 
 @Component({
