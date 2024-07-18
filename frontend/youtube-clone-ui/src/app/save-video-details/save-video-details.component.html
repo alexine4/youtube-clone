@@ -31,7 +31,7 @@
             (edited)="edit(tag, $event)"
             [aria-description]="'press enter to edit ' + tag"
           >
-            {{tag}}
+            {{ tag }}
             <button matChipRemove [attr.aria-label]="'remove ' + tag">
               <mat-icon>cancel</mat-icon>
             </button>
@@ -47,9 +47,13 @@
         </mat-chip-grid>
       </mat-form-field>
       <div>
+        <app-upload-thumbnail></app-upload-thumbnail>
+      </div>
+      
+      <div>
         <button mat-raised-button color="primary" type="submit">Save</button>
       </div>
-      <app-upload-thumbnail></app-upload-thumbnail>
+      
     </form>
   </div>
   <div fxFlex="30%">Video player</div>

@@ -19,4 +19,14 @@ export class VideoService {
     video.append('file', fileEntry, fileEntry.name);
     return this.httpClient.post<UploadVideoResponse>('/api/video/upload', video);
   }
+
+
+  uploadThumbnail(fileEntry: File, videoId: string): Observable<string> {
+    //http post call to upload video
+
+    const thumbnail = new FormData()
+    thumbnail.append('file', fileEntry, fileEntry.name);
+    thumbnail.append('videoId', videoId);
+    return this.httpClient.post('/api/video/thumbnail', thumbnail, { responseType: "text" });
+  }
 }
