@@ -49,11 +49,20 @@
       <div>
         <app-upload-thumbnail></app-upload-thumbnail>
       </div>
-      
+
       <div>
-        <button mat-raised-button color="primary" [disabled]="!fileSelected"  type="submit" (click)="onCheck()">Save</button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!fileSelected 
+          || saveVideoDetailForm.get('title')?.errors?.['required'] 
+          || saveVideoDetailForm.get('description')?.errors?.['required']"
+          type="submit"
+          (click)="onCheck()"
+        >
+          Save
+        </button>
       </div>
-      
     </form>
   </div>
   <div fxFlex="30%">Video player</div>
