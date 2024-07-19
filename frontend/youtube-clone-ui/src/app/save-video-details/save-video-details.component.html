@@ -1,7 +1,7 @@
 <div fxLayout="row wrap">
   <div fxFlex="20%">Hi</div>
   <div fxFlex="30%">
-    <div class="mat-title">Add video metadata</div>
+    <h2 class="mat-title">Add video metadata</h2>
 
     <form [formGroup]="saveVideoDetailForm">
       <mat-form-field appearance="fill">
@@ -51,7 +51,7 @@
       </div>
       
       <div>
-        <button mat-raised-button color="primary" type="submit">Save</button>
+        <button mat-raised-button color="primary" [disabled]="!fileSelected"  type="submit" (click)="onCheck()">Save</button>
       </div>
       
     </form>

@@ -17,9 +17,10 @@ export class UploadThumbnailComponent {
 
   selectedFile!: File;
   selectedFileName = '';
-
+  btnDisabled: boolean = false
   videoId = '';
   timeOut: number = 5000;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,21 +44,27 @@ export class UploadThumbnailComponent {
 
   }
   public onUpload() {
+    this.btnDisabled = true
     this.videoService.uploadThumbnail(this.selectedFile, this.videoId).subscribe(
-      result => {
+      () => {
+        this.videoService.checkUploadThumbnailStatus(true);
         this.toastr.success(
           "Thumbnail upload successful",
           'Success', {
           timeOut: this.timeOut,
         })
+
+        this.videoService.checkUploadThumbnailStatus(true);
       },
       error => {
+        this.btnDisabled = false
         this.toastr.error(error.error.message, 'Error', {
           timeOut: this.timeOut,
         }
         )
       },
       () => {
+        this.btnDisabled = false
       }
     )
 

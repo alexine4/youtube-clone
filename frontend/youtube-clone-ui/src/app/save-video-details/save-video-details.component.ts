@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { UploadThumbnailComponent } from './upload-thumbnail/upload-thumbnail.component';
+import { VideoService } from '../services/video.service';
 
 
 @Component({
@@ -37,13 +38,22 @@ export class SaveVideoDetailsComponent {
   title: FormControl = new FormControl('');
   description: FormControl = new FormControl('');
   videoStatus: FormControl = new FormControl('');
+  fileSelected: boolean = false
 
-  constructor() {
+  constructor(
+    public videoService: VideoService
+  ) {
     this.saveVideoDetailForm = new FormGroup({
       title: this.title,
       description: this.description,
       videoStatus: this.videoStatus
     })
+    // check upload thumbnail status
+    this.videoService.uploadThumbnailStatus$.subscribe(
+      status => {
+        this.fileSelected = status
+      }
+    ) 
   };
 
   readonly addOnBlur = true;
@@ -94,6 +104,12 @@ export class SaveVideoDetailsComponent {
       }
       return tags;
     });
+  }
+  onCheck() {
+
+    console.log(this.fileSelected);
+
+
   }
 
 
