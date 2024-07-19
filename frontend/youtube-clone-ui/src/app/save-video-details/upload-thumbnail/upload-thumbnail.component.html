@@ -15,8 +15,8 @@
     <p>Selected File: {{selectedFileName}}</p>
   </div>
   <hr />
-  <div>
-    <button mat-raised-button [disabled]="selectedFile === undefined" color="primary" type="submit" (click)="onUpload()" >Upload</button>
+  <div *ngIf="selectedFile">
+    <button mat-raised-button color="primary" type="submit" (click)="onUpload()" >Upload</button>
   </div>
 </div>
 <br />

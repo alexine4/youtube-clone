@@ -3,12 +3,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../../services/video.service';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-upload-thumbnail',
   standalone: true,
   imports: [
-    MatButtonModule
+    MatButtonModule,
+    CommonModule
   ],
   templateUrl: './upload-thumbnail.component.html',
   styleUrl: './upload-thumbnail.component.scss'
