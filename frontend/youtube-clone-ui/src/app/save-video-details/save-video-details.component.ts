@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { UploadThumbnailComponent } from './upload-thumbnail/upload-thumbnail.component';
 import { VideoService } from '../services/video.service';
+import { VideoPlayerComponent } from "../video-player/video-player.component";
+
 
 
 @Component({

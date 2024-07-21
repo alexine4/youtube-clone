@@ -21,7 +21,6 @@ export class UploadThumbnailComponent {
   selectedFileName = '';
   btnDisabled: boolean = false
   videoId = '';
-  timeOut: number = 5000;
 
 
   constructor(
@@ -52,18 +51,15 @@ export class UploadThumbnailComponent {
         this.videoService.checkUploadThumbnailStatus(true);
         this.toastr.success(
           "Thumbnail upload successful",
-          'Success', {
-          timeOut: this.timeOut,
-        })
+          'Success')
 
         this.videoService.checkUploadThumbnailStatus(true);
       },
       error => {
         this.btnDisabled = false
-        this.toastr.error(error.error.message, 'Error', {
-          timeOut: this.timeOut,
-        }
-        )
+
+        this.toastr.error(error.error.message, 'Error')
+
       },
       () => {
         this.btnDisabled = false
