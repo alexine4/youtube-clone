@@ -15,6 +15,7 @@ import { VideoService } from '../services/video.service';
 import { VideoPlayerComponent } from "../video-player/video-player.component";
 
 
+
 @Component({
   selector: 'app-save-video-details',
   standalone: true,
@@ -34,5 +35,84 @@ import { VideoPlayerComponent } from "../video-player/video-player.component";
   styleUrl: './save-video-details.component.scss'
 })
 export class SaveVideoDetailsComponent {
+
+  saveVideoDetailForm: FormGroup;
+  title: FormControl = new FormControl('');
+  description: FormControl = new FormControl('');
+  videoStatus: FormControl = new FormControl('');
+  fileSelected: boolean = false
+
+  constructor(
+    public videoService: VideoService
+  ) {
+    this.saveVideoDetailForm = new FormGroup({
+      title: this.title,
+      description: this.description,
+      videoStatus: this.videoStatus
+    })
+    // check upload thumbnail status
+    this.videoService.uploadThumbnailStatus$.subscribe(
+      status => {
+        this.fileSelected = status
+      }
+    ) 
+  };
+
+  readonly addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  readonly tags = signal<string[]>([]);
+  readonly announcer = inject(LiveAnnouncer);
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.tags.update(tags => [...tags, value]);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  remove(Tags: string): void {
+    this.tags.update(tags => {
+      const index = tags.indexOf(Tags);
+      if (index < 0) {
+        return tags;
+      }
+
+      tags.splice(index, 1);
+      this.announcer.announce(`Removed ${Tags}`);
+      return [...tags];
+    });
+  }
+
+  edit(Tags: string, event: MatChipEditedEvent) {
+    const value = event.value.trim();
+
+    // Remove fruit if it no longer has a name
+    if (!value) {
+      this.remove(Tags);
+      return;
+    }
+
+    // Edit existing fruit
+    this.tags.update(tags => {
+      const index = tags.indexOf(Tags);
+      if (index >= 0) {
+        tags[index] = value;
+        return [...tags];
+      }
+      return tags;
+    });
+  }
+  onCheck() {
+
+    console.log(this.fileSelected);
+
+
+  }
+
 
 }
