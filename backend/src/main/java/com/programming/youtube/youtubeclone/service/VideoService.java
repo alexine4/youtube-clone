@@ -18,6 +18,8 @@ public class VideoService {
     private final VideoRepository videoRepository;
     private final VideoMapper videoMapper;
 
+
+
     public UploadVideoResponse uploadVideo(MultipartFile multipartFile) {
         String videoUrl = s3Service.uploadFile(multipartFile);
         var video = new Video();
@@ -50,5 +52,18 @@ public class VideoService {
         savedVideo.setThumbnailUrl(thumbnailUrl);
         videoRepository.save(savedVideo);
         return thumbnailUrl;
+    }
+
+    public VideoDto getVideoDetails(String videoId) {
+        Video sevedVideo = getVideoById(videoId);
+
+        VideoDto videoDto = new VideoDto();
+        videoDto.setVideoId(sevedVideo.getId());
+        videoDto.setTitle(sevedVideo.getTitle());
+        videoDto.setDescription(sevedVideo.getDescription());
+        videoDto.setTags(sevedVideo.getTags());
+        videoDto.setThumbnailUrl(sevedVideo.getThumbnailUrl());
+        videoDto.setVideoStatus(sevedVideo.getVideoStatus());
+
     }
 }
