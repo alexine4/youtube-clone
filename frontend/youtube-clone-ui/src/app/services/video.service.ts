@@ -29,6 +29,7 @@ export class VideoService {
     return this.httpClient.post('/api/video/thumbnail', thumbnail, { responseType: "text" });
   }
 
+  //
   //check upload thumbnail status
   private uploadThumbnailStatusSource = new BehaviorSubject<boolean>(false);
   uploadThumbnailStatus$ = this.uploadThumbnailStatusSource.asObservable();
