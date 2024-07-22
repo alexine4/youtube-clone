@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../../services/video.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-upload-thumbnail',
@@ -15,8 +16,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './upload-thumbnail.component.html',
   styleUrl: './upload-thumbnail.component.scss'
 })
-export class UploadThumbnailComponent {
+export class UploadThumbnailComponent implements OnDestroy {
 
+  // subscriptions
+  private uploadThumbnail$!: Subscription;
   selectedFile!: File;
   selectedFileName = '';
   btnDisabled: boolean = false
@@ -46,7 +49,7 @@ export class UploadThumbnailComponent {
   }
   public onUpload() {
     this.btnDisabled = true
-    this.videoService.uploadThumbnail(this.selectedFile, this.videoId).subscribe(
+    this.uploadThumbnail$ = this.videoService.uploadThumbnail(this.selectedFile, this.videoId).subscribe(
       () => {
         this.videoService.checkUploadThumbnailStatus(true);
         this.toastr.success(
@@ -65,7 +68,10 @@ export class UploadThumbnailComponent {
         this.btnDisabled = false
       }
     )
+  }
 
+  ngOnDestroy(): void {
+    this.uploadThumbnail$.unsubscribe()
   }
 
 }

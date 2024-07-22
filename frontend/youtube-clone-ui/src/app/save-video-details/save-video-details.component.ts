@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatSelectModule } from '@angular/material/select';
@@ -13,6 +13,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { UploadThumbnailComponent } from './upload-thumbnail/upload-thumbnail.component';
 import { VideoService } from '../services/video.service';
 import { VideoPlayerComponent } from "../video-player/video-player.component";
+import { Subscription } from 'rxjs';
 
 
 
@@ -35,13 +36,22 @@ import { VideoPlayerComponent } from "../video-player/video-player.component";
   templateUrl: './save-video-details.component.html',
   styleUrl: './save-video-details.component.scss'
 })
-export class SaveVideoDetailsComponent {
+export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
+
+
+  //subscriptions
+  private checkThumbnailStatus$!: Subscription
 
   saveVideoDetailForm: FormGroup;
   title: FormControl = new FormControl('');
   description: FormControl = new FormControl('');
   videoStatus: FormControl = new FormControl('');
   fileSelected: boolean = false
+  readonly addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  readonly tags = signal<string[]>([]);
+  readonly announcer = inject(LiveAnnouncer);
+
 
   constructor(
     public videoService: VideoService
@@ -51,18 +61,17 @@ export class SaveVideoDetailsComponent {
       description: this.description,
       videoStatus: this.videoStatus
     })
+
+  };
+
+  ngOnInit(): void {
     // check upload thumbnail status
-    this.videoService.uploadThumbnailStatus$.subscribe(
+    this.checkThumbnailStatus$ = this.videoService.uploadThumbnailStatus$.subscribe(
       status => {
         this.fileSelected = status
       }
     ) 
-  };
-
-  readonly addOnBlur = true;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  readonly tags = signal<string[]>([]);
-  readonly announcer = inject(LiveAnnouncer);
+  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -112,5 +121,11 @@ export class SaveVideoDetailsComponent {
     console.log(this.fileSelected);
   }
 
+
+  //unsubscribing
+  ngOnDestroy(): void {
+    this.checkThumbnailStatus$.unsubscribe();
+
+  }
 
 }
