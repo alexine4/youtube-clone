@@ -109,10 +109,7 @@ export class SaveVideoDetailsComponent {
     });
   }
   onCheck() {
-
     console.log(this.fileSelected);
-
-
   }
 
 
