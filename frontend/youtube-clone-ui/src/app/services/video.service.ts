@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UploadVideoResponse } from '../interfaces/upload-video-response';
+import { VideoDetails } from '../interfaces/video-details';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,12 @@ export class VideoService {
   uploadThumbnailStatus$ = this.uploadThumbnailStatusSource.asObservable();
   checkUploadThumbnailStatus(status: boolean): void {
     this.uploadThumbnailStatusSource.next(status);
+  }
+
+  //get video details
+  getVideoDetails(videoId: string): Observable<VideoDetails> {
+    //http get call to get video details
+    return this.httpClient.get<VideoDetails>(`/api/video/${videoId}`);
   }
 
 }
