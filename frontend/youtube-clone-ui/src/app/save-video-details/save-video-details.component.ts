@@ -29,7 +29,8 @@ import { VideoPlayerComponent } from "../video-player/video-player.component";
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
-    UploadThumbnailComponent
+    UploadThumbnailComponent,
+    VideoPlayerComponent
   ],
   templateUrl: './save-video-details.component.html',
   styleUrl: './save-video-details.component.scss'
