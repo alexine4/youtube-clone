@@ -57,7 +57,9 @@ export class UploadThumbnailComponent {
       },
       error => {
         this.btnDisabled = false
+
         this.toastr.error(error.error.message, 'Error')
+
       },
       () => {
         this.btnDisabled = false
