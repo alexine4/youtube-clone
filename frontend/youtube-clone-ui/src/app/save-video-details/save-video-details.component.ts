@@ -41,12 +41,18 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
 
   //subscriptions
   private checkThumbnailStatus$!: Subscription
+  private getVideoDetail$!: Subscription
 
+  //form properties
   saveVideoDetailForm: FormGroup;
   title: FormControl = new FormControl('');
   description: FormControl = new FormControl('');
   videoStatus: FormControl = new FormControl('');
   fileSelected: boolean = false
+  //video variables
+  videoId: string = '668aac4cb5b26e077cc9dbfa';
+  thumbnailUrl: string = '';
+  videoUrl!: string;
   readonly addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   readonly tags = signal<string[]>([]);
@@ -70,7 +76,18 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
       status => {
         this.fileSelected = status
       }
-    ) 
+    )
+    //get video details
+    this.getVideoDetail$ = this.videoService.getVideoDetails(this.videoId).subscribe(
+      videoDetails => {
+        this.title.patchValue(videoDetails.title)
+        this.description.patchValue(videoDetails.description)
+        this.videoStatus.patchValue(videoDetails.videoStatus)
+        this.videoUrl = videoDetails.videoUrl
+        this.thumbnailUrl = videoDetails.thumbnailUrl
+      }
+    )
+
   }
 
   add(event: MatChipInputEvent): void {
@@ -124,7 +141,13 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
 
   //unsubscribing
   ngOnDestroy(): void {
-    this.checkThumbnailStatus$.unsubscribe();
+    if (this.checkThumbnailStatus$) {
+      this.checkThumbnailStatus$.unsubscribe();
+    }
+    if (this.getVideoDetail$) {
+      this.getVideoDetail$.unsubscribe();
+    }
+
 
   }
 

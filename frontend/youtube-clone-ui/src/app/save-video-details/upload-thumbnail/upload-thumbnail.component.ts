@@ -71,7 +71,8 @@ export class UploadThumbnailComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.uploadThumbnail$.unsubscribe()
+    if (this.uploadThumbnail$) {
+      this.uploadThumbnail$.unsubscribe();
+    }
   }
-
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-video-player',
   standalone: true,
@@ -11,7 +11,12 @@ import { Component } from '@angular/core';
   styleUrl: './video-player.component.scss'
 })
 export class VideoPlayerComponent {
-  thumbnailUrl: string = 'https://alexin4-test.s3.eu-north-1.amazonaws.com/091e15be-c724-47cd-ad79-663ac25f4dcf.png';
-  videoUrl: string = 'https://vjs.zencdn.net/v/oceans.mp4';
+
+  @Input() videoUrl!: string | '';
+
+  @Input() thumbnailUrl!: string | '';
+
+
+
 
 }
