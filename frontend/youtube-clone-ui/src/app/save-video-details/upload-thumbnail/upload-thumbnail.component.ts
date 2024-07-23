@@ -22,9 +22,8 @@ export class UploadThumbnailComponent implements OnDestroy {
   private uploadThumbnail$!: Subscription;
   selectedFile!: File;
   selectedFileName = '';
-  btnDisabled: boolean = false
+  btnDisabled: boolean = false;
   videoId = '';
-
 
   constructor(
     private activatedRoute: ActivatedRoute,

@@ -19,6 +19,8 @@ import { Subscription, timeout } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { changeLoaderStatus } from '../shared/shared-function';
+import { VideoDetails } from '../interfaces/video-details';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-save-video-details',
@@ -36,7 +38,8 @@ import { changeLoaderStatus } from '../shared/shared-function';
     MatIconModule,
     UploadThumbnailComponent,
     VideoPlayerComponent,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ToastrModule
   ],
   templateUrl: './save-video-details.component.html',
   styleUrl: './save-video-details.component.scss'
@@ -63,9 +66,13 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
   readonly tags = signal<string[]>([]);
   readonly announcer = inject(LiveAnnouncer);
 
+  //btn check status
+  btnDisabled: boolean = false;
+
 
   constructor(
-    public videoService: VideoService
+    public videoService: VideoService,
+    private toastr: ToastrService
   ) {
     this.saveVideoDetailForm = new FormGroup({
       title: this.title,
@@ -143,8 +150,33 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
       return tags;
     });
   }
-  onCheck() {
-    // console.log(this.fileSelected);
+  saveVideo() {
+    this.btnDisabled = true;
+    const videoDetails: VideoDetails = {
+      videoId: this.videoId,
+      userId: 'userId',
+      title: this.title.value,
+      description: this.description.value,
+      videoStatus: this.videoStatus.value,
+      tags: this.tags(),
+      videoUrl: this.videoUrl,
+      thumbnailUrl: this.thumbnailUrl
+    }
+
+    this.videoService.saveVideoDetails(videoDetails).subscribe(
+      response => {
+        console.log(response)
+      },
+      error => {
+        this.toastr.error(error.message)
+        this.btnDisabled = false;
+      },
+      () => {
+        this.toastr.success('Video details saved successfully')
+        this.btnDisabled = false;
+      }
+    )
+
   }
 
 
