@@ -13,14 +13,18 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { UploadThumbnailComponent } from './upload-thumbnail/upload-thumbnail.component';
 import { VideoService } from '../services/video.service';
 import { VideoPlayerComponent } from "../video-player/video-player.component";
-import { Subscription } from 'rxjs';
+import { Subscription, timeout } from 'rxjs';
 
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+import { changeLoaderStatus } from '../shared/shared-function';
 
 @Component({
   selector: 'app-save-video-details',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     FlexLayoutServerModule,
@@ -31,7 +35,8 @@ import { Subscription } from 'rxjs';
     MatChipsModule,
     MatIconModule,
     UploadThumbnailComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    MatProgressSpinnerModule
   ],
   templateUrl: './save-video-details.component.html',
   styleUrl: './save-video-details.component.scss'
@@ -42,7 +47,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
   //subscriptions
   private checkThumbnailStatus$!: Subscription
   private getVideoDetail$!: Subscription
-
+  loading: boolean = true;
   //form properties
   saveVideoDetailForm: FormGroup;
   title: FormControl = new FormControl('');
@@ -87,6 +92,10 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
         this.thumbnailUrl = videoDetails.thumbnailUrl
       }
     )
+    //
+    changeLoaderStatus().then(status => {
+      this.loading = status
+    })
 
   }
 
@@ -135,7 +144,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
     });
   }
   onCheck() {
-    console.log(this.fileSelected);
+    // console.log(this.fileSelected);
   }
 
 

@@ -1,4 +1,4 @@
-<div fxLayout="row wrap">
+<div *ngIf="!loading; else loader" fxLayout="row wrap">
   <div fxFlex="20%">Hi</div>
   <div fxFlex="30%">
     <h2 class="mat-title form">Add video metadata</h2>
@@ -72,3 +72,5 @@
   </div>
   <div fxFlex="20%">Hi</div>
 </div>
+
+<ng-template #loader ><mat-spinner class="center" ></mat-spinner></ng-template>
