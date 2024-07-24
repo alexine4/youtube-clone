@@ -55,7 +55,7 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="!fileSelected 
+          [disabled]="!thumbnailUrl 
           || saveVideoDetailForm.get('title')?.errors?.['required'] 
           || saveVideoDetailForm.get('description')?.errors?.['required']
           || btnDisabled"

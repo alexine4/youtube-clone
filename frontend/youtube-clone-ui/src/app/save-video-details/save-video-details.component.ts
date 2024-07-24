@@ -63,7 +63,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
   videoUrl!: string;
   readonly addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  readonly tags = signal<string[]>([]);
+  tags = signal<string[]>([]);
   readonly announcer = inject(LiveAnnouncer);
 
   //btn check status
@@ -97,6 +97,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
         this.videoStatus.patchValue(videoDetails.videoStatus)
         this.videoUrl = videoDetails.videoUrl
         this.thumbnailUrl = videoDetails.thumbnailUrl
+        this.tags.set(this.tags().concat(videoDetails.tags))
       }
     )
     //
@@ -165,7 +166,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
 
     this.videoService.saveVideoDetails(videoDetails).subscribe(
       response => {
-        console.log(response)
+
       },
       error => {
         this.toastr.error(error.message)
