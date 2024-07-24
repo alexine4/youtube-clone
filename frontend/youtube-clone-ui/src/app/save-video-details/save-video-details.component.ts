@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatSelectModule } from '@angular/material/select';
@@ -13,13 +13,20 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { UploadThumbnailComponent } from './upload-thumbnail/upload-thumbnail.component';
 import { VideoService } from '../services/video.service';
 import { VideoPlayerComponent } from "../video-player/video-player.component";
+import { Subscription, timeout } from 'rxjs';
 
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+import { changeLoaderStatus } from '../shared/shared-function';
+import { VideoDetails } from '../interfaces/video-details';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-save-video-details',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     FlexLayoutServerModule,
@@ -30,39 +37,75 @@ import { VideoPlayerComponent } from "../video-player/video-player.component";
     MatChipsModule,
     MatIconModule,
     UploadThumbnailComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    MatProgressSpinnerModule,
+    ToastrModule
   ],
   templateUrl: './save-video-details.component.html',
   styleUrl: './save-video-details.component.scss'
 })
-export class SaveVideoDetailsComponent {
+export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
 
+
+  //subscriptions
+  private checkThumbnailStatus$!: Subscription
+  private getVideoDetail$!: Subscription
+  loading: boolean = true;
+  //form properties
   saveVideoDetailForm: FormGroup;
   title: FormControl = new FormControl('');
   description: FormControl = new FormControl('');
   videoStatus: FormControl = new FormControl('');
   fileSelected: boolean = false
+  //video variables
+  videoId: string = '668aac4cb5b26e077cc9dbfa';
+  thumbnailUrl: string = '';
+  videoUrl!: string;
+  readonly addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  tags = signal<string[]>([]);
+  readonly announcer = inject(LiveAnnouncer);
+
+  //btn check status
+  btnDisabled: boolean = false;
+
 
   constructor(
-    public videoService: VideoService
+    public videoService: VideoService,
+    private toastr: ToastrService
   ) {
     this.saveVideoDetailForm = new FormGroup({
       title: this.title,
       description: this.description,
       videoStatus: this.videoStatus
     })
+
+  };
+
+  ngOnInit(): void {
     // check upload thumbnail status
-    this.videoService.uploadThumbnailStatus$.subscribe(
+    this.checkThumbnailStatus$ = this.videoService.uploadThumbnailStatus$.subscribe(
       status => {
         this.fileSelected = status
       }
-    ) 
-  };
+    )
+    //get video details
+    this.getVideoDetail$ = this.videoService.getVideoDetails(this.videoId).subscribe(
+      videoDetails => {
+        this.title.patchValue(videoDetails.title)
+        this.description.patchValue(videoDetails.description)
+        this.videoStatus.patchValue(videoDetails.videoStatus)
+        this.videoUrl = videoDetails.videoUrl
+        this.thumbnailUrl = videoDetails.thumbnailUrl
+        this.tags.set(this.tags().concat(videoDetails.tags))
+      }
+    )
+    //
+    changeLoaderStatus().then(status => {
+      this.loading = status
+    })
 
-  readonly addOnBlur = true;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  readonly tags = signal<string[]>([]);
-  readonly announcer = inject(LiveAnnouncer);
+  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -108,9 +151,46 @@ export class SaveVideoDetailsComponent {
       return tags;
     });
   }
-  onCheck() {
-    console.log(this.fileSelected);
+  saveVideo() {
+    this.btnDisabled = true;
+    const videoDetails: VideoDetails = {
+      videoId: this.videoId,
+      userId: 'userId',
+      title: this.title.value,
+      description: this.description.value,
+      videoStatus: this.videoStatus.value,
+      tags: this.tags(),
+      videoUrl: this.videoUrl,
+      thumbnailUrl: this.thumbnailUrl
+    }
+
+    this.videoService.saveVideoDetails(videoDetails).subscribe(
+      response => {
+
+      },
+      error => {
+        this.toastr.error(error.message)
+        this.btnDisabled = false;
+      },
+      () => {
+        this.toastr.success('Video details saved successfully')
+        this.btnDisabled = false;
+      }
+    )
+
   }
 
+
+  //unsubscribing
+  ngOnDestroy(): void {
+    if (this.checkThumbnailStatus$) {
+      this.checkThumbnailStatus$.unsubscribe();
+    }
+    if (this.getVideoDetail$) {
+      this.getVideoDetail$.unsubscribe();
+    }
+
+
+  }
 
 }
