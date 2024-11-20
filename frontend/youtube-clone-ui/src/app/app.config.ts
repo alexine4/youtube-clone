@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideAnimations(),
     provideToastr({
-      timeOut: 5000
+      timeOut: 4000,
     })
   ]
 };
