@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { changeLoaderStatus } from '../shared/shared-function';
 import { VideoDetails } from '../interfaces/video-details';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-save-video-details',
@@ -58,7 +59,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
   videoStatus: FormControl = new FormControl('');
   fileSelected: boolean = false
   //video variables
-  videoId: string = '668aac4cb5b26e077cc9dbfa';
+  videoId: string = '';
   thumbnailUrl: string = '';
   videoUrl!: string;
   readonly addOnBlur = true;
@@ -71,9 +72,14 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     public videoService: VideoService,
     private toastr: ToastrService
   ) {
+    // get videoId
+    this.videoId = this.activatedRoute.snapshot.params['videoId'];
+    
+    //create form group
     this.saveVideoDetailForm = new FormGroup({
       title: this.title,
       description: this.description,
