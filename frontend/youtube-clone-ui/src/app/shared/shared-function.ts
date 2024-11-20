@@ -7,3 +7,11 @@ export function changeLoaderStatus(): Promise<boolean> {
         }, TIME_OUT);
     });
 }
+
+export function getRedirectUrl(): string {
+    if (typeof window !== 'undefined') {
+        return window.location.origin;
+    } else {
+        return 'defaultRedirectUrl'; // Замініть на відповідне значення за замовчуванням
+    }
+}

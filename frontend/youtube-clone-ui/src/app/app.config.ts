@@ -7,12 +7,15 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { authConfig } from './auth/auth.config';
+import { provideAuth } from 'angular-auth-oidc-client';
 
 
 
 export const appConfig: ApplicationConfig = {
 
   providers: [
+    provideAuth(authConfig),
     provideRouter(routes),
     provideClientHydration(),
     provideAnimationsAsync(),
