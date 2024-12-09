@@ -1,31 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
     MatToolbarModule,
+    MatMenuModule,
     MatButtonModule,
     MatIconModule,
-    CommonModule
+    CommonModule,
+    RouterModule,
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticated: boolean = false
+  isAuthenticated: boolean = false;
 
-  constructor(private oidcSecurityService: OidcSecurityService) { }
+  private readonly oidcSecurityService = inject(OidcSecurityService);
+
+  constructor(private toastr: ToastrService) {}
 
   ngOnInit(): void {
-    this.oidcSecurityService.isAuthenticated$.subscribe(({ isAuthenticated }) => {
-      this.isAuthenticated = isAuthenticated
-    })
+    this.oidcSecurityService.checkAuth().subscribe((authData) => {
+      this.isAuthenticated = authData.isAuthenticated;
+    });
   }
 
   login() {
@@ -33,9 +40,12 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    this.oidcSecurityService.logoff().subscribe((result) => {
+      console.log(result);
+      this.isAuthenticated = false;
+    });
     this.oidcSecurityService
-      .logoff()
+      .revokeAccessToken()
       .subscribe((result) => console.log(result));
   }
-
 }

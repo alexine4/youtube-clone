@@ -113,7 +113,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
             ()=>{
               this.router.navigate(['upload-video'])
             }
-          )
+          ) 
         },
         () => {
           changeLoaderStatus().then((status) => {
@@ -121,8 +121,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
           });
         }
       );
-      //
-      
+    //
   }
 
   add(event: MatChipInputEvent): void {
@@ -183,7 +182,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
     };
 
     this.videoService.saveVideoDetails(videoDetails).subscribe(
-      (response) => { },
+      (response) => {},
       (error) => {
         this.toastr.error(error.message);
         this.btnDisabled = false;
