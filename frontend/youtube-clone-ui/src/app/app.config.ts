@@ -24,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideToastr({
       timeOut: 4000,
+      preventDuplicates: true,
     }),
   ],
 };

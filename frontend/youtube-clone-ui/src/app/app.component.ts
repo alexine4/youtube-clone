@@ -4,7 +4,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
-import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
 
 
 @Component({
@@ -22,12 +21,9 @@ export class AppComponent {
 
 
   constructor(
-    private oidcSecurityService: OidcSecurityService
   ) { }
 
   ngOnInit() {
-    this.oidcSecurityService
-      .checkAuth()
   }
 
 

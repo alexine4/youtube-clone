@@ -50,7 +50,7 @@ export class VideoService {
       .get<VideoDetails>(`/api/video/${videoId}`)
       .pipe(delay(WAIT_TIME));
   }
-  //s
+  //save video details
   saveVideoDetails(videoDetails: VideoDetails): Observable<VideoDetails> {
     return this.httpClient
       .put<VideoDetails>(`/api/video`, videoDetails)

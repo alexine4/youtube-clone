@@ -17,7 +17,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { UploadThumbnailComponent } from './upload-thumbnail/upload-thumbnail.component';
 import { VideoService } from '../services/video.service';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
-import { Subscription, timeout } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,7 @@ import { changeLoaderStatus } from '../shared/shared-function';
 import { VideoDetails } from '../interfaces/video-details';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
+import { WAIT_TIME } from '../shared/system.properties';
 
 @Component({
   selector: 'app-save-video-details',
@@ -95,32 +96,31 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
         this.fileSelected = status;
       });
     //get video details
-    this.getVideoDetail$ = this.videoService
-      .getVideoDetails(this.videoId)
-      .subscribe(
-        (videoDetails) => {
-          this.title.patchValue(videoDetails.title);
-          this.description.patchValue(videoDetails.description);
-          this.videoStatus.patchValue(videoDetails.videoStatus);
-          this.videoUrl = videoDetails.videoUrl;
-          this.thumbnailUrl = videoDetails.thumbnailUrl;
-          this.tags.set(this.tags().concat(videoDetails.tags));
-        },
-        (error) => {
-           this.toastr.error(error.statusText, error.status, {
-            timeOut: 5000,
-          }).onHidden.subscribe(
-            ()=>{
-              this.router.navigate(['upload-video'])
-            }
-          ) 
-        },
-        () => {
-          changeLoaderStatus().then((status) => {
-            this.loading = status;
-          });
-        }
-      );
+    if (this.videoId !== '') {
+      this.getVideoDetail$ = this.videoService
+        .getVideoDetails(this.videoId)
+        .subscribe({
+          next: (videoDetails) => {
+            this.title.patchValue(videoDetails.title);
+            this.description.patchValue(videoDetails.description);
+            this.videoStatus.patchValue(videoDetails.videoStatus);
+            this.videoUrl = videoDetails.videoUrl;
+            this.thumbnailUrl = videoDetails.thumbnailUrl;
+            this.tags.set(this.tags().concat(videoDetails.tags));
+          },
+          error: (e) => {
+            this.toastr.error(e.statusText, e.status, {
+              timeOut:WAIT_TIME,
+            });
+              this.router.navigate(['upload-video']);
+          },
+          complete: () => {
+            changeLoaderStatus().then((status) => {
+              this.loading = status;
+            });
+          },
+        });
+    }
     //
   }
 
@@ -184,6 +184,8 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
     this.videoService.saveVideoDetails(videoDetails).subscribe(
       (response) => {},
       (error) => {
+        console.log('1');
+
         this.toastr.error(error.message);
         this.btnDisabled = false;
       },
