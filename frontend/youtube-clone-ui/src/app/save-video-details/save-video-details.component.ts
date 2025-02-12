@@ -110,9 +110,11 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
           },
           error: (e) => {
             this.toastr.error(e.statusText, e.status, {
-              timeOut:WAIT_TIME,
+              timeOut: WAIT_TIME,
             });
+            if ((e.status = '401')) {
               this.router.navigate(['upload-video']);
+            }
           },
           complete: () => {
             changeLoaderStatus().then((status) => {

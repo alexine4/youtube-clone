@@ -41,7 +41,6 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.oidcSecurityService.logoff().subscribe((result) => {
-      console.log(result);
       this.isAuthenticated = false;
     });
     this.oidcSecurityService

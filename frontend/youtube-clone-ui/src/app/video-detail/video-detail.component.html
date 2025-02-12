@@ -1,0 +1,20 @@
+<div *ngIf="!loading; else loader" fxLayout="row">
+  <div fxFlex="65%" class="video-detail">
+    <app-video-player
+      [videoUrl]="videoDetails.videoUrl"
+      [thumbnailUrl]="videoDetails.thumbnailUrl"
+    ></app-video-player>
+    <div class="mat-title">{{videoDetails.title}}</div>
+    <div fxLayout="row">
+        <div fxFlex ="50%">
+            <div>Data</div>
+            <span>{{videoDetails.description}}</span>
+        </div>
+        <div fxFlex ="50%"></div>
+    </div>
+  </div>
+  <div fxFlex="5%">2 eds</div>
+  <div fxFlex="30%"> 3 d ser</div>
+</div>
+
+<ng-template #loader><mat-spinner class="center"></mat-spinner></ng-template>
