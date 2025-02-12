@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-video-detail',
@@ -22,6 +23,7 @@ import { FlexLayoutServerModule } from '@angular/flex-layout/server';
     MatProgressSpinnerModule,
     ToastrModule,
     VideoPlayerComponent,
+    MatIconModule
   ],
   templateUrl: './video-detail.component.html',
   styleUrl: './video-detail.component.scss',

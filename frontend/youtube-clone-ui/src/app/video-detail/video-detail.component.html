@@ -6,8 +6,10 @@
     ></app-video-player>
     <div class="mat-title">{{videoDetails.title}}</div>
     <div fxLayout="row">
-        <div fxFlex ="50%">
-            <div>Data</div>
+        <div fxFlex ="50%" class="sub-info">
+            <span>{{videoDetails.viewCount}} Views</span>
+             <mat-icon center>remove</mat-icon>
+            <span>Data</span>
             <span>{{videoDetails.description}}</span>
         </div>
         <div fxFlex ="50%"></div>

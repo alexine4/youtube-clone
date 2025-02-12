@@ -9,4 +9,5 @@ export interface VideoDetails {
     thumbnailUrl: string;
     likeCount?: number;
     dislikeCount?: number;
+    viewCount?: number;
 }
