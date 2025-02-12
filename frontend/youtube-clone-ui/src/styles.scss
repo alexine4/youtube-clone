@@ -16,5 +16,8 @@ body {
     transform: translate(-50%, -50%);
     text-align: center;
 }
+html{
+    --mat-list-list-item-leading-icon-end-space: 16px;
+}
 // regular style toast 
 @import 'ngx-toastr/toastr';
