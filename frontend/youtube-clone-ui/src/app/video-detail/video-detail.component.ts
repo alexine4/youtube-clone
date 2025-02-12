@@ -12,27 +12,42 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+
+import { MatChipsModule } from '@angular/material/chips';
+import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
-    selector: 'app-video-detail',
-    standalone: true,
-    imports: [
-        CommonModule,
-        FlexLayoutModule,
-        FlexLayoutServerModule,
-        MatProgressSpinnerModule,
-        ToastrModule,
-        VideoPlayerComponent,
-        MatIconModule
-    ],
-    templateUrl: './video-detail.component.html',
-    styleUrl: './video-detail.component.scss'
+  selector: 'app-video-detail',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FlexLayoutModule,
+    FlexLayoutServerModule,
+    MatProgressSpinnerModule,
+    ToastrModule,
+    VideoPlayerComponent,
+    MatChipsModule,
+    MatIconModule,
+    MatDividerModule,
+    MatCardModule,
+    CommentsComponent,
+  ],
+  templateUrl: './video-detail.component.html',
+  styleUrl: './video-detail.component.scss',
 })
 export class VideoDetailComponent {
+  likePushed: boolean = true;
+  dislikePushed: boolean = false;
+
+  showSubscribeButton: boolean = false;
+
   loading: boolean = true;
   videoId!: string;
   getVideoDetail$!: Subscription;
   videoDetails!: VideoDetails;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -64,5 +79,18 @@ export class VideoDetailComponent {
           },
         });
     }
+  }
+
+  subscribeToUser() {
+    this.showSubscribeButton = !this.showSubscribeButton
+
+  }
+
+
+  disLikeVideo() {
+    this.dislikePushed = !this.dislikePushed;
+  }
+  likeVideo() {
+    this.likePushed = !this.likePushed;
   }
 }

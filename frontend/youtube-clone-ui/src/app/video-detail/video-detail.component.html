@@ -1,22 +1,68 @@
 <div *ngIf="!loading; else loader" fxLayout="row">
-  <div fxFlex="65%" class="video-detail">
-    <app-video-player
+
+  <div fxLayout="row" >
+    <div fxFlex="65%" class="video-detail">
+      <div fxLayout="column" fxLayoutGap="8px">
+        <app-video-player
       [videoUrl]="videoDetails.videoUrl"
       [thumbnailUrl]="videoDetails.thumbnailUrl"
     ></app-video-player>
-    <div class="mat-title">{{videoDetails.title}}</div>
-    <div fxLayout="row">
-        <div fxFlex ="50%" class="sub-info">
-            <span>{{videoDetails.viewCount}} Views</span>
-             <mat-icon center>remove</mat-icon>
-            <span>Data</span>
-            <span>{{videoDetails.description}}</span>
+        <h2 class="mat-title">{{videoDetails.title}}</h2>
+        <div fxLayout="row">
+          <div fxFlex="50%" class="sub-info">
+            <span class="view-count">{{videoDetails.viewCount}} Views</span>
+            <mat-icon>remove</mat-icon>
+            <span class="video-upload-date">Apr 13, 2021</span>
+          </div>
+          <div fxFlex="50%" fxLayoutAlign="end">
+            <span fxLayout="row"   class="like-dislike-section ">
+                <button mat-icon-button class="sub-info button" [ngClass]="{'active-color': likePushed ===true}" (click)="likeVideo()">
+                  <mat-icon>thumb_up_off_alt</mat-icon>
+                  {{videoDetails.likeCount}}
+                </button>
+                <button mat-icon-button  class="sub-info button" [ngClass]="{'active-color': dislikePushed === true}" (click)="disLikeVideo()">
+                  <mat-icon>thumb_down_off_alt</mat-icon>
+                  {{videoDetails.disLikeCount}}
+                </button>
+            </span>
+          </div>
         </div>
-        <div fxFlex ="50%"></div>
+        <mat-divider></mat-divider>
+        <mat-card-header>
+          <div class="user-conteiner">
+            <div mat-card-avatar class="header-image"></div>
+            <mat-card-title>Programming Techie</mat-card-title>
+          </div>
+          <div class="user-conteiner">
+            <mat-card-subtitle class="subtitles">4.2K Subscribers</mat-card-subtitle>
+            <button *ngIf="showSubscribeButton" class="active-color subscribe-button"  mat-raised-button 
+                    (click)="subscribeToUser()">SUBSCRIBE
+            </button>
+            <button *ngIf="!showSubscribeButton" class="subscribe-button grey-color" 
+                    mat-raised-button
+                    (click)="subscribeToUser()">UNSUBSCRIBE
+            </button>
+          </div>
+         
+        </mat-card-header>
+        <div>{{videoDetails.description}}</div>
+        <mat-divider></mat-divider>
+        <div fxLayout="row wrap" fxLayoutGap="12px grid">
+          <mat-chip-set  *ngFor="let tag of videoDetails.tags">
+            <mat-chip>{{tag}}</mat-chip>
+          </mat-chip-set>
+        </div>
+        
+        <mat-divider></mat-divider>
+        <app-comments [videoId]="videoDetails.videoId"></app-comments>
+      </div>
+    </div>
+    <div fxFlex="5%"></div>
+    <div fxFlex="30%" class="suggestion-bar">
     </div>
   </div>
-  <div fxFlex="5%">2 eds</div>
-  <div fxFlex="30%"> 3 d ser</div>
 </div>
+ 
 
 <ng-template #loader><mat-spinner class="center"></mat-spinner></ng-template>
+

@@ -171,6 +171,8 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
     });
   }
   saveVideo() {
+    const currentDate = new Date();
+
     this.btnDisabled = true;
     const videoDetails: VideoDetails = {
       videoId: this.videoId,
@@ -181,6 +183,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
       tags: this.tags(),
       videoUrl: this.videoUrl,
       thumbnailUrl: this.thumbnailUrl,
+      dateTime: currentDate.toISOString()
     };
 
     this.videoService.saveVideoDetails(videoDetails).subscribe(

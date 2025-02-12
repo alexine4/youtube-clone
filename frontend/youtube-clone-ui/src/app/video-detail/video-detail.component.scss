@@ -1,9 +1,95 @@
+
+
+
 .video-detail{
 margin-top: 20px;
 margin-left: 50px;
+
 }
 
 .sub-info{
     display: flex;
     align-items: center;
 }
+
+.video-detail-header{
+    padding-top: 15px;
+  }
+  
+  
+  mat-card[ng-reflect-router-link] {
+    cursor: pointer;
+  }
+  mat-card-title{
+    font-size: 18px;
+  }
+  
+  .suggestion-bar {
+    margin-top: 10px;
+  }
+  
+  
+  
+  .subscribe-button-clicked {
+    background-color: gray;
+    height: 40px;
+  }
+  
+  .view-count {
+    padding-right: 5px;
+  }
+  
+  
+  
+  .video-upload-date{
+    padding-left: 5px;
+  }
+  
+
+  
+  .like-dislike-section {
+    padding-right: 10px;
+  }
+  .button{
+    margin: 0px 3px;
+    background: #38373765;
+    border-radius: 20px;
+    transition: all 0.5s ease 0s;
+    cursor: pointer;
+  }
+
+  .active-color{
+    color: #11f32f;
+    background: #f364116c;
+  }
+  .subtitles{
+    margin-left: 10px;
+    color: #11f32f;
+  }
+
+  .subscribe-button{
+    height: 40px;
+    justify-content: right;
+    border-radius: 15px;
+    padding: 10px;
+    cursor: pointer;
+    margin: 0 0 0 10px;
+  }
+  .grey-color{
+    background: #6d6b6b9a;
+    color: #000;
+  }
+
+  .header-image {
+    height: 40px;
+    width: 40px;
+    margin: 5px 10px;
+    border-radius: 50%;
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  .user-conteiner{
+    display: flex;
+    align-items: center;
+  }
