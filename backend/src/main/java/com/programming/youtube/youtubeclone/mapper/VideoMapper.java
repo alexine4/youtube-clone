@@ -18,6 +18,7 @@ public class VideoMapper {
                 .thumbnailUrl(video.getThumbnailUrl())
                 .likeCount(video.getLikes().get())
                 .disLikeCount(video.getDisLikes().get())
+                .createdAt(video.getCreatedAt())
                 .build();
     }
 }

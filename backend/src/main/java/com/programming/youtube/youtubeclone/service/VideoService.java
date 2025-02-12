@@ -42,7 +42,7 @@ public class VideoService {
         savedVideo.setTags(videoDto.getTags());
         savedVideo.setThumbnailUrl(videoDto.getThumbnailUrl());
         savedVideo.setVideoStatus(videoDto.getVideoStatus());
-        savedVideo.setDateTime(videoDto.getDateTime());
+        savedVideo.setCreatedAt(videoDto.getCreatedAt());
         //save the video to the database
         videoRepository.save(savedVideo);
         return videoMapper.mapToDto(savedVideo);
@@ -132,7 +132,7 @@ public class VideoService {
         videoDto.setLikeCount(video.getLikes().get());
         videoDto.setDisLikeCount(video.getDisLikes().get());
         videoDto.setViewCount(video.getViewCount().get());
-        videoDto.setDateTime(videoDto.getDateTime());
+        videoDto.setCreatedAt(videoDto.getCreatedAt());
         return videoDto;
     }
 

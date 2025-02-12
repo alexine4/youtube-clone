@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -33,5 +32,5 @@ public class VideoDto {
     private Integer likeCount;
     private Integer disLikeCount;
     private Integer viewCount;
-    private String dateTime;
+    private String createdAt;
 }
