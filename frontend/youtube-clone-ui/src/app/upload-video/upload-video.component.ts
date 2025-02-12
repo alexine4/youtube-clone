@@ -5,31 +5,23 @@ import { NgxFileDropEntry, NgxFileDropModule } from 'ngx-file-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { VideoService } from '../services/video.service';
 import { CommonModule } from '@angular/common';
-import {} from '@angular/common/http';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { changeLoaderStatus } from '../shared/shared-function';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-upload-video',
-  standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-HttpClientModule,
-    NgxFileDropModule,
-    MatButtonModule,
-    ToastrModule,
-    MatProgressSpinnerModule
-
-
-  ],
-  templateUrl: './upload-video.component.html',
-  styleUrl: './upload-video.component.scss'
+    selector: 'app-upload-video',
+    standalone: true,
+    imports: [
+        FormsModule,
+        CommonModule,
+        NgxFileDropModule,
+        MatButtonModule,
+        ToastrModule,
+        MatProgressSpinnerModule
+    ],
+    templateUrl: './upload-video.component.html',
+    styleUrl: './upload-video.component.scss'
 })
 export class UploadVideoComponent implements OnInit {
 

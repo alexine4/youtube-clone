@@ -14,19 +14,19 @@ import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-video-detail',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FlexLayoutModule,
-    FlexLayoutServerModule,
-    MatProgressSpinnerModule,
-    ToastrModule,
-    VideoPlayerComponent,
-    MatIconModule
-  ],
-  templateUrl: './video-detail.component.html',
-  styleUrl: './video-detail.component.scss',
+    selector: 'app-video-detail',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FlexLayoutModule,
+        FlexLayoutServerModule,
+        MatProgressSpinnerModule,
+        ToastrModule,
+        VideoPlayerComponent,
+        MatIconModule
+    ],
+    templateUrl: './video-detail.component.html',
+    styleUrl: './video-detail.component.scss'
 })
 export class VideoDetailComponent {
   loading: boolean = true;

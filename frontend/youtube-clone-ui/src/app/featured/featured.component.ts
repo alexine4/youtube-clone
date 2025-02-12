@@ -11,18 +11,18 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';;
 
 @Component({
-  selector: 'app-featured',
-  standalone: true,
-  imports: [
-    VideoCardComponent,
-    CommonModule,
-    FlexLayoutModule,
-    FlexLayoutServerModule,
-    MatProgressSpinnerModule,
-    ToastrModule,
-  ],
-  templateUrl: './featured.component.html',
-  styleUrl: './featured.component.scss',
+    selector: 'app-featured',
+    standalone: true,
+    imports: [
+        VideoCardComponent,
+        CommonModule,
+        FlexLayoutModule,
+        FlexLayoutServerModule,
+        MatProgressSpinnerModule,
+        ToastrModule,
+    ],
+    templateUrl: './featured.component.html',
+    styleUrl: './featured.component.scss'
 })
 export class FeaturedComponent implements OnInit {
   featuredVideos!: VideoDetails[];

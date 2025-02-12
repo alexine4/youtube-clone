@@ -28,26 +28,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WAIT_TIME } from '../shared/system.properties';
 
 @Component({
-  selector: 'app-save-video-details',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FlexLayoutModule,
-    FlexLayoutServerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatChipsModule,
-    MatIconModule,
-    UploadThumbnailComponent,
-    VideoPlayerComponent,
-    MatProgressSpinnerModule,
-    ToastrModule,
-  ],
-  templateUrl: './save-video-details.component.html',
-  styleUrl: './save-video-details.component.scss',
+    selector: 'app-save-video-details',
+    standalone: true,
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FlexLayoutModule,
+        FlexLayoutServerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatChipsModule,
+        MatIconModule,
+        UploadThumbnailComponent,
+        VideoPlayerComponent,
+        MatProgressSpinnerModule,
+        ToastrModule,
+    ],
+    templateUrl: './save-video-details.component.html',
+    styleUrl: './save-video-details.component.scss'
 })
 export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
   //subscriptions
