@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { FormsModule } from '@angular/forms';
 import { NgxFileDropEntry, NgxFileDropModule } from 'ngx-file-drop';
@@ -7,6 +7,8 @@ import { VideoService } from '../services/video.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { changeLoaderStatus } from '../shared/shared-function';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-upload-video',
@@ -17,15 +19,17 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     HttpClientModule,
     NgxFileDropModule,
     MatButtonModule,
-    ToastrModule
+    ToastrModule,
+    MatProgressSpinnerModule
 
 
   ],
   templateUrl: './upload-video.component.html',
   styleUrl: './upload-video.component.scss'
 })
-export class UploadVideoComponent {
+export class UploadVideoComponent implements OnInit {
 
+  loading: boolean = true;
   // variables
   public files: NgxFileDropEntry[] = [];
   fileUploaded: boolean = false;
@@ -36,6 +40,13 @@ export class UploadVideoComponent {
     private toastr: ToastrService,
     private router: Router
   ) { }
+
+  ngOnInit(): void {
+    changeLoaderStatus().then(status => {
+      this.loading = status
+    })
+
+  }
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;

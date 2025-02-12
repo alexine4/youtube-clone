@@ -7,5 +7,17 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-// regular style toast 
-@import 'ngx-toastr/toastr';
+// custom styles
+
+.center {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+html{
+    --mat-list-list-item-leading-icon-end-space: 16px;
+}
+
+

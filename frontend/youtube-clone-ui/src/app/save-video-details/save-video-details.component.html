@@ -1,4 +1,4 @@
-<div fxLayout="row wrap">
+<div *ngIf="!loading; else loader" fxLayout="row wrap">
   <div fxFlex="20%">Hi</div>
   <div fxFlex="30%">
     <h2 class="mat-title form">Add video metadata</h2>
@@ -12,7 +12,6 @@
         <mat-label>Description</mat-label>
 
         <textarea matInput [formControl]="description" required></textarea>
-
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -56,11 +55,12 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="!fileSelected 
+          [disabled]="!thumbnailUrl 
           || saveVideoDetailForm.get('title')?.errors?.['required'] 
-          || saveVideoDetailForm.get('description')?.errors?.['required']"
+          || saveVideoDetailForm.get('description')?.errors?.['required']
+          || btnDisabled"
           type="submit"
-          (click)="onCheck()"
+          (click)="saveVideo()"
         >
           Save
         </button>
@@ -68,7 +68,12 @@
     </form>
   </div>
   <div fxFlex="30%">
-    <app-video-player></app-video-player>
+    <app-video-player
+      [videoUrl]="videoUrl"
+      [thumbnailUrl]="thumbnailUrl"
+    ></app-video-player>
   </div>
   <div fxFlex="20%">Hi</div>
 </div>
+
+<ng-template #loader><mat-spinner class="center"></mat-spinner></ng-template>
