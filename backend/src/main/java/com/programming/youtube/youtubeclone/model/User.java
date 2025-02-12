@@ -16,12 +16,13 @@ import java.util.Set;
 
 public class User {
     @Id
-    private Long id;
+    private String id;
     private String firstName;
     private String lastName;
     private String fullName;
     private String picture;
     private String emailAddress;
+    private String sub;
     private Set<String> subscribedToUser = new HashSet<>();
     private Set<String> subscribers = new HashSet<>();
     private Set<String> videoHistory =  new LinkedHashSet<>();
@@ -56,4 +57,10 @@ public class User {
         subscribers.add(userId);
     }
 
+    public void removeFromSubscribedUsers(String userId) {
+        subscribedToUser.remove(userId);
+    }
+    public void removeFromSubscribers(String userId) {
+        subscribers.remove(userId);
+    }
 }

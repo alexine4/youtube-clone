@@ -30,8 +30,7 @@ public class VideoDto {
     private String videoUrl;
     @NotBlank
     private String thumbnailUrl;
-    @Min(value = 0)
-    private int likeCount;
-    @Min(value = 0)
-    private int dislikeCount;
+    private Integer likeCount;
+    private Integer disLikeCount;
+    private Integer viewCount;
 }

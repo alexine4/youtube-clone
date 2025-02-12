@@ -1,11 +1,9 @@
 
 // src/app/app.component.ts
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { HeaderComponent } from './header/header.component';
-
 
 
 @Component({
@@ -20,4 +18,14 @@ import { HeaderComponent } from './header/header.component';
 })
 export class AppComponent {
   title = 'youtube-clone';
+
+
+  constructor(
+  ) { }
+
+  ngOnInit() {
+  }
+
+
+
 }

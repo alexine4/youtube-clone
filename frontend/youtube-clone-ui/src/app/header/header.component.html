@@ -1,14 +1,33 @@
 <mat-toolbar>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
     <mat-icon>menu</mat-icon>
   </button>
   <span>My App</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon">
+  <button
+    mat-icon-button
+    [routerLink]="'/upload-video'"
+    class="example-icon favorite-icon"
+  >
     <mat-icon>video_call</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon">
+  <button
+    *ngIf="isAuthenticated; else noAuth"
+    [matMenuTriggerFor]="menu"
+    mat-icon-button
+    class="example-icon"
+  >
     <mat-icon>account_circle</mat-icon>
   </button>
-</mat-toolbar>
 
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+  <ng-template #noAuth>
+    <button mat-raised-button (click)="login()">Login</button>
+  </ng-template>
+</mat-toolbar>

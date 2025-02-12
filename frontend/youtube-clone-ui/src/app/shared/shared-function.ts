@@ -1,9 +1,9 @@
-import { TIME_OUT } from './system.properties'
+import { TIME_OUT } from './system.properties';
 
 export function changeLoaderStatus(): Promise<boolean> {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(false);
-        }, TIME_OUT);
-    });
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(false);
+    }, TIME_OUT);
+  });
 }
