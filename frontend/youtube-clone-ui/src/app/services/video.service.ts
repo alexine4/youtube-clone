@@ -1,19 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay, Observable } from 'rxjs';
 import { UploadVideoResponse } from '../interfaces/upload-video-response';
 import { VideoDetails } from '../interfaces/video-details';
 import { WAIT_TIME } from '../shared/system.properties';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VideoService {
-  constructor(
-    private httpClient: HttpClient,
-    private oidcSecurityServices: OidcSecurityService
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
   uploadVideo(fileEntry: File): Observable<UploadVideoResponse> {
     const video = new FormData();
@@ -54,6 +50,13 @@ export class VideoService {
   saveVideoDetails(videoDetails: VideoDetails): Observable<VideoDetails> {
     return this.httpClient
       .put<VideoDetails>(`/api/video`, videoDetails)
+      .pipe(delay(WAIT_TIME));
+  }
+
+  //get all videos
+  getAllVideos(): Observable<VideoDetails[]> {
+    return this.httpClient
+      .get<VideoDetails[]>('/api/video')
       .pipe(delay(WAIT_TIME));
   }
 }

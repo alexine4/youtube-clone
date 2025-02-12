@@ -1,9 +1,11 @@
-<mat-card class="example-card" appearance="outlined">
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+<mat-card class="example-card" appearance="outlined" [routerLink]="['/video-details/', video.videoId]"
+routerLinkActive="router-link-active">
+    <img mat-card-image [src]="video.thumbnailUrl" alt="Thumbnail">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      <mat-card-title>{{video.title}}</mat-card-title>
+      <mat-card-subtitle>Alexine4</mat-card-subtitle>
+      <mat-card-subtitle>1m view</mat-card-subtitle>
     </mat-card-header>
     
  
