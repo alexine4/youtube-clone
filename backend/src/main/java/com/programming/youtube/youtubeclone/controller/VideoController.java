@@ -3,6 +3,7 @@ package com.programming.youtube.youtubeclone.controller;
 import com.programming.youtube.youtubeclone.dto.CommentDTO;
 import com.programming.youtube.youtubeclone.dto.UploadVideoResponse;
 import com.programming.youtube.youtubeclone.dto.VideoDto;
+import com.programming.youtube.youtubeclone.exception.YoutubeCloneException;
 import com.programming.youtube.youtubeclone.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,12 +43,12 @@ public class VideoController {
        return videoService.getVideoDetails(videoId);
     }
 
-    @PostMapping("/{videoId}/like")
+    @PatchMapping("/{videoId}/like")
     @ResponseStatus(HttpStatus.OK)
     public  VideoDto likeVideo (@PathVariable String videoId) {
-        return videoService.likeVideo(videoId);
+        return videoService.likeVideo(videoId)  ;
     }
-    @PostMapping("/{videoId}/disLike")
+    @PatchMapping("/{videoId}/disLike")
     @ResponseStatus(HttpStatus.OK)
     public  VideoDto disLikeVideo (@PathVariable String videoId) {
         return videoService.disLikeVideo(videoId);

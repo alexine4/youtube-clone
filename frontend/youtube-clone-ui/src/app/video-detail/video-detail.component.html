@@ -1,9 +1,10 @@
 <div *ngIf="!loading; else loader" fxLayout="row">
 
   <div fxLayout="row" >
-    <div fxFlex="65%" class="video-detail">
+    <div fxFlex="45%" class="video-detail">
       <div fxLayout="column" fxLayoutGap="8px">
         <app-video-player
+        [size]="0.4"
       [videoUrl]="videoDetails.videoUrl"
       [thumbnailUrl]="videoDetails.thumbnailUrl"
     ></app-video-player>
@@ -12,7 +13,7 @@
           <div fxFlex="50%" class="sub-info">
             <span class="view-count">{{videoDetails.viewCount}} Views</span>
             <mat-icon>remove</mat-icon>
-            <span class="video-upload-date">Apr 13, 2021</span>
+            <span class="video-upload-date">{{videoDetails.createdAt | date: 'mediumDate'}}</span>
           </div>
           <div fxFlex="50%" fxLayoutAlign="end">
             <span fxLayout="row"   class="like-dislike-section ">

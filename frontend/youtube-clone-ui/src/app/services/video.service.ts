@@ -9,6 +9,7 @@ import { WAIT_TIME } from '../shared/system.properties';
   providedIn: 'root',
 })
 export class VideoService {
+ 
   constructor(private httpClient: HttpClient) {}
 
   uploadVideo(fileEntry: File): Observable<UploadVideoResponse> {
@@ -58,5 +59,13 @@ export class VideoService {
     return this.httpClient
       .get<VideoDetails[]>('/api/video')
       .pipe(delay(WAIT_TIME));
+  }
+
+  // push like video
+  likeVideo(videoId: string): Observable<VideoDetails>  {
+    return this.httpClient.patch<VideoDetails>(`/api/video/${videoId}/like`, null)
+  }
+  disLikeVideo(videoId: string): Observable<VideoDetails>  {
+    return this.httpClient.patch<VideoDetails>(`/api/video/${videoId}/disLike`, null)
   }
 }

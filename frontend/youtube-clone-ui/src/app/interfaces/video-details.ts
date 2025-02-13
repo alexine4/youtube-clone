@@ -10,5 +10,5 @@ export interface VideoDetails {
     likeCount?: number;
     disLikeCount?: number;
     viewCount?: number;
-    dateTime:string
+    createdAt:string
 }

@@ -38,7 +38,7 @@ import { CommentsComponent } from '../comments/comments.component';
   styleUrl: './video-detail.component.scss',
 })
 export class VideoDetailComponent {
-  likePushed: boolean = true;
+  likePushed: boolean = false;
   dislikePushed: boolean = false;
 
   showSubscribeButton: boolean = false;
@@ -52,7 +52,7 @@ export class VideoDetailComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private videoService: VideoService,
-    private toastr: ToastrService
+    private toastrService: ToastrService
   ) {
     // get videoId
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
@@ -65,7 +65,7 @@ export class VideoDetailComponent {
             this.videoDetails = videoDetails;
           },
           error: (e) => {
-            this.toastr.error(e.statusText, e.status, {
+            this.toastrService.error(e.statusText, e.status, {
               timeOut: WAIT_TIME,
             });
             if ((e.status = '401')) {
@@ -82,15 +82,38 @@ export class VideoDetailComponent {
   }
 
   subscribeToUser() {
-    this.showSubscribeButton = !this.showSubscribeButton
-
+    this.showSubscribeButton = !this.showSubscribeButton;
   }
-
 
   disLikeVideo() {
-    this.dislikePushed = !this.dislikePushed;
+    this.videoService.disLikeVideo(this.videoId).subscribe({
+      next: (response) => {
+        this.videoDetails.likeCount = response.likeCount;
+        this.videoDetails.disLikeCount = response.disLikeCount;
+      },
+      error: (e) => {
+        this.toastrService.error(e.message);
+      },
+      complete: () => {
+        this.dislikePushed = !this.dislikePushed;
+        this.likePushed = false;
+      },
+    });
   }
+
   likeVideo() {
-    this.likePushed = !this.likePushed;
+    this.videoService.likeVideo(this.videoId).subscribe({
+      next: (response) => {
+        this.videoDetails.likeCount = response.likeCount;
+        this.videoDetails.disLikeCount = response.disLikeCount;
+      },
+      error: (e) => {
+        this.toastrService.error(e.message);
+      },
+      complete: () => {
+        this.likePushed = !this.likePushed;
+        this.dislikePushed = false;
+      },
+    });
   }
 }

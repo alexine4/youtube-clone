@@ -132,7 +132,7 @@ public class VideoService {
         videoDto.setLikeCount(video.getLikes().get());
         videoDto.setDisLikeCount(video.getDisLikes().get());
         videoDto.setViewCount(video.getViewCount().get());
-        videoDto.setCreatedAt(videoDto.getCreatedAt());
+        videoDto.setCreatedAt(video.getCreatedAt());
         return videoDto;
     }
 

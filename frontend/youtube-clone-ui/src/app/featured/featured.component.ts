@@ -38,7 +38,7 @@ export class FeaturedComponent implements OnInit {
         this.featuredVideos = videos;
       },
       error: (e) => {        
-        const toast = this.toastrService.success(e.message)
+        const toast = this.toastrService.error(e.message)
         setTimeout(() => {
           this.toastrService.remove(toast.toastId);
         }, WAIT_TIME); 

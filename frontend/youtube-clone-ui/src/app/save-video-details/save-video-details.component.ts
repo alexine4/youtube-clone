@@ -183,7 +183,7 @@ export class SaveVideoDetailsComponent implements OnInit, OnDestroy {
       tags: this.tags(),
       videoUrl: this.videoUrl,
       thumbnailUrl: this.thumbnailUrl,
-      dateTime: currentDate.toISOString()
+      createdAt: currentDate.toISOString()
     };
 
     this.videoService.saveVideoDetails(videoDetails).subscribe(
