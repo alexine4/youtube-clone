@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 
 import { MatChipsModule } from '@angular/material/chips';
 import { CommentsComponent } from '../comments/comments.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-video-detail',
@@ -41,7 +42,7 @@ export class VideoDetailComponent {
   likePushed: boolean = false;
   dislikePushed: boolean = false;
 
-  showSubscribeButton: boolean = false;
+  showSubscribeButton: boolean = true;
 
   loading: boolean = true;
   videoId!: string;
@@ -52,6 +53,7 @@ export class VideoDetailComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private videoService: VideoService,
+    private userService: UserService,
     private toastrService: ToastrService
   ) {
     // get videoId
@@ -82,7 +84,22 @@ export class VideoDetailComponent {
   }
 
   subscribeToUser() {
-    this.showSubscribeButton = !this.showSubscribeButton;
+    
+    const userId = this.userService.getUserId()
+    this.userService.subscribeToUser(userId).subscribe(
+      res=>{
+        this.showSubscribeButton = !this.showSubscribeButton;
+      }
+    )
+  }
+  unSubscribeToUser() {
+    
+    const userId = this.userService.getUserId()
+    this.userService.unSubscribeToUser(userId).subscribe(
+      res=>{
+        this.showSubscribeButton = !this.showSubscribeButton;
+      }
+    )
   }
 
   disLikeVideo() {
