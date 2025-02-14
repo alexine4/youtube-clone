@@ -72,7 +72,7 @@ export class UploadVideoComponent implements OnInit {
             this.router.navigate([`/save-video-details/${data.videoId}`]);
           },
           error => {
-            this.toastr.error(error.error.message, 'Error', {
+            this.toastr.error(error.message, 'Error', {
               timeOut: 5000,
             })
           },

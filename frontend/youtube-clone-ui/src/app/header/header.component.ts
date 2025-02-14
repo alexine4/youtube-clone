@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { CommonModule } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-header',
@@ -26,10 +26,12 @@ export class HeaderComponent implements OnInit {
   isAuthenticated: boolean = false;
 
   private readonly oidcSecurityService = inject(OidcSecurityService);
+  constructor(
+    private cookieService: CookieService
+  ){}
 
-  constructor(private toastr: ToastrService) {}
-
-  ngOnInit(): void {
+  ngOnInit(): void {  
+  
     this.oidcSecurityService.checkAuth().subscribe((authData) => {
       this.isAuthenticated = authData.isAuthenticated;
     });
@@ -42,6 +44,7 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.oidcSecurityService.logoff().subscribe((result) => {
       this.isAuthenticated = false;
+      this.cookieService.delete('userId','/')
     });
     this.oidcSecurityService
       .revokeAccessToken()

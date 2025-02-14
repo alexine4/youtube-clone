@@ -86,6 +86,7 @@ export class VideoDetailComponent {
   subscribeToUser() {
     
     const userId = this.userService.getUserId()
+    
     this.userService.subscribeToUser(userId).subscribe(
       res=>{
         this.showSubscribeButton = !this.showSubscribeButton;
