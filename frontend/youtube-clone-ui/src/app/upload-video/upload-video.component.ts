@@ -5,27 +5,23 @@ import { NgxFileDropEntry, NgxFileDropModule } from 'ngx-file-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { VideoService } from '../services/video.service';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { changeLoaderStatus } from '../shared/shared-function';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-upload-video',
-  standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    HttpClientModule,
-    NgxFileDropModule,
-    MatButtonModule,
-    ToastrModule,
-    MatProgressSpinnerModule
-
-
-  ],
-  templateUrl: './upload-video.component.html',
-  styleUrl: './upload-video.component.scss'
+    selector: 'app-upload-video',
+    standalone: true,
+    imports: [
+        FormsModule,
+        CommonModule,
+        NgxFileDropModule,
+        MatButtonModule,
+        ToastrModule,
+        MatProgressSpinnerModule
+    ],
+    templateUrl: './upload-video.component.html',
+    styleUrl: './upload-video.component.scss'
 })
 export class UploadVideoComponent implements OnInit {
 
@@ -76,7 +72,7 @@ export class UploadVideoComponent implements OnInit {
             this.router.navigate([`/save-video-details/${data.videoId}`]);
           },
           error => {
-            this.toastr.error(error.error.message, 'Error', {
+            this.toastr.error(error.message, 'Error', {
               timeOut: 5000,
             })
           },

@@ -4,30 +4,26 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
-import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
 
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    HeaderComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    standalone: true,
+    imports: [
+        RouterOutlet,
+        HeaderComponent
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'youtube-clone';
 
 
   constructor(
-    private oidcSecurityService: OidcSecurityService
   ) { }
 
   ngOnInit() {
-    this.oidcSecurityService
-      .checkAuth()
   }
 
 

@@ -12,9 +12,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AllArgsConstructor
 public class Comment {
     @Id
-    private Long id;
+    private String id;
     private String text;
-    private Long authorId;
+    private String authorId;
     private AtomicInteger likeCount = new AtomicInteger(0);
     private AtomicInteger disLikeCount = new AtomicInteger(0);
     public int likeCount() {
