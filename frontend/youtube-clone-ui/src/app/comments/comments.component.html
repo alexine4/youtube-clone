@@ -1,18 +1,18 @@
 
-<form class="example-form" [formGroup]="commentsForm" *ngIf="!loading; else loader">
-    <mat-form-field class="example-full-width">
+<form fxLayout = "row" class="example-form" [formGroup]="commentsForm" *ngIf="!loading; else loader">
+    <mat-form-field fxFlex="80%" class="example-full-width">
       <mat-label>Leave a comment</mat-label>
       <textarea matInput [formControlName]="'comment'"
                 placeholder="Share your thoughts"></textarea>
     </mat-form-field>
-    <div fxLayout="row">
-      <div fxFlex="60%"></div>
-      <div fxFlex="40%" fxFlexAlign="end">
-        <span>
-          <button mat-button>CANCEL</button>
-        </span>
+    <div fxLayout="column">
+        <div fxFlex="100%" fxFlexAlign="center">
+        
         <span>
           <button type="submit" (click)="postComment()" mat-button color="primary">COMMENT</button>
+        </span>
+        <span>
+          <button mat-button (click)="clearField()">CANCEL</button>
         </span>
       </div>
     </div>
@@ -28,7 +28,7 @@
         </mat-card-header>
       </div>
       <div fxFlex="50%" class="delete-comment" fxFlexAlign="end">
-        <button mat-icon-button>
+        <button  mat-icon-button>
           <mat-icon>delete</mat-icon>
         </button>
       </div>

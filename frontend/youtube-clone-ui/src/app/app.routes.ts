@@ -28,6 +28,10 @@ export const routes: Routes = [
         component: SubscriptionsComponent,
       },
       {
+        path: 'video-details/:videoId',
+        component: VideoDetailComponent,
+      },
+      {
         path: 'liked-videos',
         component: LikedVideosComponent,
       }
@@ -42,10 +46,7 @@ export const routes: Routes = [
     path: 'save-video-details/:videoId',
     component: SaveVideoDetailsComponent,
   },
-  {
-    path: 'video-details/:videoId',
-    component: VideoDetailComponent,
-  },
+  
   {
     path: 'callback',
     component: CallbackComponent,

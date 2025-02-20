@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav mode="side" [(opened)]="this.userService.menuStatus">
     <app-sidebar></app-sidebar>
   </mat-sidenav>
 

@@ -1,10 +1,10 @@
 <div *ngIf="!loading; else loader" fxLayout="row">
 
-  <div fxLayout="row" >
-    <div fxFlex="45%" class="video-detail">
+  <div fxLayout="column" >
+    <div fxFlex="100%" class="video-detail">
       <div fxLayout="column" fxLayoutGap="8px">
         <app-video-player
-        [size]="0.4"
+        [size]="0.5"
       [videoUrl]="videoDetails.videoUrl"
       [thumbnailUrl]="videoDetails.thumbnailUrl"
     ></app-video-player>
@@ -29,7 +29,7 @@
           </div>
         </div>
         <mat-divider></mat-divider>
-        <mat-card-header>
+        <mat-card-header class="user-conteiner">
           <div class="user-conteiner">
             <div mat-card-avatar class="header-image"></div>
             <mat-card-title>Alexine4</mat-card-title>
@@ -57,9 +57,6 @@
         <mat-divider></mat-divider>
         <app-comments [videoId]="videoDetails.videoId"></app-comments>
       </div>
-    </div>
-    <div fxFlex="5%"></div>
-    <div fxFlex="30%" class="suggestion-bar">
     </div>
   </div>
 </div>

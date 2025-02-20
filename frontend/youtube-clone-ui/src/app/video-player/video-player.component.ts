@@ -27,7 +27,7 @@ export class VideoPlayerComponent implements OnInit {
         newWidth = newHeight * aspectRatio;
       }
 
-      video!.style.width = `${newWidth}px`;
+      video!.style.width = `${newWidth  }px`;
       video!.style.height = `${newHeight}px`;
     }
   }

@@ -11,6 +11,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 })
 export class UserService {
   private userId: string = '';
+  menuStatus: boolean = false;
   constructor(
     private httpClient: HttpClient,
     private oidcSecurityService: OidcSecurityService,

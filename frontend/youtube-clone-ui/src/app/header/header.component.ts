@@ -7,6 +7,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { UserService } from '../services/user.service';
 
 @Component({
     selector: 'app-header',
@@ -17,16 +18,18 @@ import { CookieService } from 'ngx-cookie-service';
         MatButtonModule,
         MatIconModule,
         CommonModule,
-        RouterModule,
+        RouterModule
     ],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
+  
   isAuthenticated: boolean = false;
 
   private readonly oidcSecurityService = inject(OidcSecurityService);
   constructor(
+    private userService:UserService,
     private cookieService: CookieService
   ){}
 
@@ -50,4 +53,11 @@ export class HeaderComponent implements OnInit {
       .revokeAccessToken()
       .subscribe((result) => console.log(result));
   }
+
+  toggleSideBar() {
+
+    this.userService.menuStatus = !this.userService.menuStatus
+    
+    
+    }
 }

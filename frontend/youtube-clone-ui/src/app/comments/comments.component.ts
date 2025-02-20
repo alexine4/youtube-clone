@@ -14,6 +14,7 @@ import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-comments',
@@ -29,6 +30,7 @@ import { MatInputModule } from '@angular/material/input';
     MatDividerModule,
     MatIconModule,
     MatCardModule,
+    MatButtonModule,
     MatProgressSpinnerModule,
     ToastrModule
 
@@ -47,7 +49,7 @@ export class CommentsComponent implements OnInit {
     private commentService: CommentService,
     private toastrService: ToastrService) {
     this.commentsForm = new FormGroup({
-      comment: new FormControl('comment'),
+      comment: new FormControl(''),
     });
   }
 
@@ -68,6 +70,9 @@ export class CommentsComponent implements OnInit {
       this.commentsForm.get('comment')?.reset();
       this.getComments();
     })
+  }
+  clearField(){
+    this.commentsForm.get('comment')?.reset();
   }
 
   getComments() {
