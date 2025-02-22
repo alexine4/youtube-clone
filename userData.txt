@@ -1,2 +1,2 @@
-#cloud.aws.credentials.access-key=AKIAVRUVPJE2RMOMVLEZ
-#cloud.aws.credentials.secret-key=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
+#cloud.aws.credentials.access-key=AKIAVRUVPJE2RMOMVLEZ-myKeys
+#cloud.aws.credentials.secret-key=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-myKeys
