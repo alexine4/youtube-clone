@@ -1,14 +1,54 @@
-
 import { Routes } from '@angular/router';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { SaveVideoDetailsComponent } from './save-video-details/save-video-details.component';
+import { VideoDetailComponent } from './video-detail/video-detail.component';
+import { HomeComponent } from './home/home.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { LikedVideosComponent } from './liked-videos/liked-videos.component';
+import { HistoryComponent } from './history/history.component';
+import { FeaturedComponent } from './featured/featured.component';
+import { CallbackComponent } from './callback/callback.component';
 
 export const routes: Routes = [
-    {
-        path: 'upload-video', component: UploadVideoComponent
-    },
-    {
-        path: 'save-video-details/:videoId', component: SaveVideoDetailsComponent
-    }
 
+  {
+    path: '',
+    component: HomeComponent,
+    children:[
+      {
+        path: 'featured',
+        component: FeaturedComponent,
+      },
+      {
+        path: 'history',
+        component: HistoryComponent,
+      },
+      {
+        path: 'subscriptions',
+        component: SubscriptionsComponent,
+      },
+      {
+        path: 'video-details/:videoId',
+        component: VideoDetailComponent,
+      },
+      {
+        path: 'liked-videos',
+        component: LikedVideosComponent,
+      }
+    ]
+  },
+  
+  {
+    path: 'upload-video',
+    component: UploadVideoComponent,
+  },
+  {
+    path: 'save-video-details/:videoId',
+    component: SaveVideoDetailsComponent,
+  },
+  
+  {
+    path: 'callback',
+    component: CallbackComponent,
+  },
 ];

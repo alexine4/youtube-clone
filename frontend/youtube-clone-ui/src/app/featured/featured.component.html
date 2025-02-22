@@ -1,0 +1,12 @@
+<div class="page" *ngIf="!loading; else loader"  >
+    <div fxLayout="row wrap">
+        <h3>Featured video</h3>
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="12px grid">
+        <div *ngFor="let video of featuredVideos">
+            <app-video-card [video]="video"></app-video-card>
+        </div>
+    </div>
+</div>
+<ng-template #loader><mat-spinner class="center"></mat-spinner></ng-template>
+

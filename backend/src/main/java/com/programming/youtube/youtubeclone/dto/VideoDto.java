@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -30,8 +29,8 @@ public class VideoDto {
     private String videoUrl;
     @NotBlank
     private String thumbnailUrl;
-    @Min(value = 0)
-    private int likeCount;
-    @Min(value = 0)
-    private int dislikeCount;
+    private Integer likeCount;
+    private Integer disLikeCount;
+    private Integer viewCount;
+    private String createdAt;
 }

@@ -1,14 +1,18 @@
 package com.programming.youtube.youtubeclone.service;
 
+import com.programming.youtube.youtubeclone.dto.CommentDTO;
 import com.programming.youtube.youtubeclone.dto.UploadVideoResponse;
 import com.programming.youtube.youtubeclone.dto.VideoDto;
 import com.programming.youtube.youtubeclone.mapper.VideoMapper;
+import com.programming.youtube.youtubeclone.model.Comment;
 import com.programming.youtube.youtubeclone.model.Video;
 import com.programming.youtube.youtubeclone.repository.VideoRepository;
 import com.programming.youtube.youtubeclone.exception.YoutubeCloneException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +21,7 @@ public class VideoService {
     private final S3Service s3Service;
     private final VideoRepository videoRepository;
     private final VideoMapper videoMapper;
+    private final UserService userService;
 
 
 
@@ -37,6 +42,7 @@ public class VideoService {
         savedVideo.setTags(videoDto.getTags());
         savedVideo.setThumbnailUrl(videoDto.getThumbnailUrl());
         savedVideo.setVideoStatus(videoDto.getVideoStatus());
+        savedVideo.setCreatedAt(videoDto.getCreatedAt());
         //save the video to the database
         videoRepository.save(savedVideo);
         return videoMapper.mapToDto(savedVideo);
@@ -55,16 +61,108 @@ public class VideoService {
     }
 
     public VideoDto getVideoDetails(String videoId) {
-        Video sevedVideo = getVideoById(videoId);
+        Video savedVideo = getVideoById(videoId);
 
+        increaseVideoCount(savedVideo);
+        userService.addVideoToHistory(videoId);
+
+        return newVideoDTO(savedVideo);
+    }
+
+    private void increaseVideoCount(Video savedVideo) {
+        savedVideo.increaseViewCount();
+        videoRepository.save(savedVideo);
+    }
+
+    public VideoDto likeVideo(String videoId) {
+        Video videoById = getVideoById(videoId);
+
+        if (userService.ifLikedVideo(videoId)){
+            videoById.decreaseLikeCount();
+            userService.removeFromLikedVideo(videoId);
+        } else if (userService.ifDisLikedVideo(videoId)){
+            videoById.decreaseDisLikeCount();
+            userService.removeFromDisLikedVideo(videoId);
+            videoById.increaseLikeCount();
+            userService.addTolikedVideos(videoId);
+        }else {
+            videoById.increaseLikeCount();
+            userService.addTolikedVideos(videoId);
+        }
+        videoRepository.save(videoById);
+
+
+
+        return newVideoDTO(videoById);
+    }
+
+
+    public VideoDto disLikeVideo(String videoId) {
+        Video videoById = getVideoById(videoId);
+
+        if (userService.ifDisLikedVideo(videoId)){
+            videoById.decreaseDisLikeCount();
+            userService.removeFromDisLikedVideo(videoId);
+        } else if (userService.ifLikedVideo(videoId)){
+            videoById.decreaseLikeCount();
+            userService.removeFromLikedVideo(videoId);
+            videoById.increaseDisLikeCount();
+            userService.addToDisLikedVideos(videoId);
+        }else {
+            videoById.increaseDisLikeCount();
+            userService.addToDisLikedVideos(videoId);
+        }
+        videoRepository.save(videoById);
+
+
+
+        return newVideoDTO(videoById);
+    }
+
+
+    private VideoDto newVideoDTO(Video video){
         VideoDto videoDto = new VideoDto();
-        videoDto.setVideoId(sevedVideo.getId());
-        videoDto.setTitle(sevedVideo.getTitle());
-        videoDto.setDescription(sevedVideo.getDescription());
-        videoDto.setTags(sevedVideo.getTags());
-        videoDto.setThumbnailUrl(sevedVideo.getThumbnailUrl());
-        videoDto.setVideoStatus(sevedVideo.getVideoStatus());
-        videoDto.setVideoUrl(sevedVideo.getVideoUrl());
+        videoDto.setVideoId(video.getId());
+        videoDto.setTitle(video.getTitle());
+        videoDto.setDescription(video.getDescription());
+        videoDto.setTags(video.getTags());
+        videoDto.setThumbnailUrl(video.getThumbnailUrl());
+        videoDto.setVideoStatus(video.getVideoStatus());
+        videoDto.setVideoUrl(video.getVideoUrl());
+        videoDto.setLikeCount(video.getLikes().get());
+        videoDto.setDisLikeCount(video.getDisLikes().get());
+        videoDto.setViewCount(video.getViewCount().get());
+        videoDto.setCreatedAt(video.getCreatedAt());
         return videoDto;
     }
+
+    public void addComment(String videoId, CommentDTO commentDTO) {
+       Video video = getVideoById(videoId);
+        Comment comment = new Comment();
+        comment.setText(commentDTO.getCommentText());
+        comment.setAuthorId(commentDTO.getAuthorId());
+        video.addComment(comment);
+
+        videoRepository.save(video);
+    }
+
+    public List<CommentDTO> getAllComments(String videoId) {
+        Video videoById = getVideoById(videoId);
+        List<Comment> commentList= videoById.getComments();
+
+        return commentList.stream().map(this::mapToCommentDto).toList();
+
+    }
+
+    private CommentDTO mapToCommentDto(Comment comment) {
+        CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setCommentText(comment.getText());
+        commentDTO.setAuthorId(comment.getAuthorId());
+        return  commentDTO;
+    }
+
+    public List<VideoDto> getAllVideos() {
+        return  videoRepository.findAll().stream().map(this::newVideoDTO).toList();
+    }
+
 }

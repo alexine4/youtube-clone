@@ -7,14 +7,14 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-upload-thumbnail',
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    CommonModule
-  ],
-  templateUrl: './upload-thumbnail.component.html',
-  styleUrl: './upload-thumbnail.component.scss'
+    selector: 'app-upload-thumbnail',
+    standalone: true,
+    imports: [
+        MatButtonModule,
+        CommonModule
+    ],
+    templateUrl: './upload-thumbnail.component.html',
+    styleUrl: './upload-thumbnail.component.scss'
 })
 export class UploadThumbnailComponent implements OnDestroy {
 

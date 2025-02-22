@@ -9,20 +9,14 @@ import { WAIT_TIME } from '../shared/system.properties';
   providedIn: 'root',
 })
 export class VideoService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   uploadVideo(fileEntry: File): Observable<UploadVideoResponse> {
-    //http post call to upload video
-
     const video = new FormData();
     video.append('file', fileEntry, fileEntry.name);
-    return this.httpClient.post<UploadVideoResponse>(
-      '/api/video/upload',
-      video
-    ).pipe(
-      delay(WAIT_TIME)
-    )
+    return this.httpClient
+      .post<UploadVideoResponse>('/api/video/upload', video)
+      .pipe(delay(WAIT_TIME));
   }
 
   uploadThumbnail(fileEntry: File, videoId: string): Observable<string> {
@@ -30,11 +24,11 @@ export class VideoService {
     const thumbnail = new FormData();
     thumbnail.append('file', fileEntry, fileEntry.name);
     thumbnail.append('videoId', videoId);
-    return this.httpClient.post('/api/video/thumbnail', thumbnail, {
-      responseType: 'text',
-    }).pipe(
-      delay(WAIT_TIME)
-    )
+    return this.httpClient
+      .post('/api/video/thumbnail', thumbnail, {
+        responseType: 'text',
+      })
+      .pipe(delay(WAIT_TIME));
   }
 
   //
@@ -48,17 +42,33 @@ export class VideoService {
   //get video details
   getVideoDetails(videoId: string): Observable<VideoDetails> {
     //http get call to get video details
-    return this.httpClient.get<VideoDetails>(`/api/video/${videoId}`).pipe(
-      delay(WAIT_TIME)
-    )
+    return this.httpClient
+      .get<VideoDetails>(`/api/video/${videoId}`)
+      .pipe(delay(WAIT_TIME));
   }
-  //s
+  //save video details
   saveVideoDetails(videoDetails: VideoDetails): Observable<VideoDetails> {
-    return this.httpClient.put<VideoDetails>(
-      `/api/video`,
-      videoDetails
-    ).pipe(
-      delay(WAIT_TIME)
-    )
+    return this.httpClient
+      .put<VideoDetails>(`/api/video`, videoDetails)
+      .pipe(delay(WAIT_TIME));
+  }
+
+  //get all videos
+  getAllVideos(): Observable<VideoDetails[]> {
+    return this.httpClient
+      .get<VideoDetails[]>('/api/video')
+      .pipe(delay(WAIT_TIME));
+  }
+
+  // push like video
+  likeVideo(videoId: string): Observable<VideoDetails> {
+    return this.httpClient
+      .patch<VideoDetails>(`/api/video/${videoId}/like`, null)
+      .pipe(delay(WAIT_TIME));
+  }
+  disLikeVideo(videoId: string): Observable<VideoDetails> {
+    return this.httpClient
+      .patch<VideoDetails>(`/api/video/${videoId}/disLike`, null)
+      .pipe(delay(WAIT_TIME));
   }
 }

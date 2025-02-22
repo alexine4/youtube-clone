@@ -34,4 +34,5 @@ frontend/youtube-clone-ui/node_modules
 frontend/youtube-clone-ui/dist
 ### VS Code ###
 .vscode/
+frontend/youtube-clone-ui/video
 
